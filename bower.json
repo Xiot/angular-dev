@@ -1,0 +1,21 @@
+{
+  "name": "angular-dev",
+  "version": "0.0.0",
+  "description": "Playings into the wonderful world of ng",
+  "authors": [
+    "Chris Thomas"
+  ],
+  "license": "MIT",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "angular": "~1.3.1",
+    "angular-ui-router": "~0.2.11"
+  }
+}
