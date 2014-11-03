@@ -1,15 +1,24 @@
 <html>
-
+<link href="styles/app.manual.css" rel="stylesheet" />
 <head>
 </head>
 
-<body ng-app="ng-dev">
+<body ng-app="dev">
     <div ui-view>
 
     </div>
+
+
     <script src="bower_components/angular/angular.js"></script>
     <script src="bower_components/angular-ui-router/release/angular-ui-router.js"></script>
-    <script type="text/javascript" src="app.js"></script>
+
+    <script src="app.js"></script>
+    <script src="app/config/states.js"></script>
+
+    <script src="app/common/directives/tree.js"></script>
+
+    <script src="app/areas/layout/RootController.js"></script>
+
 </body>
 
 </html>
