@@ -1,0 +1,8 @@
+﻿<li ng-repeat="item in items">
+    <a href="">{{item.name}}</a>
+    <ul ng-if="item.items && item.items.length > 0">
+        <hdt-item items="item.items">
+            <ng-transclude />
+        </hdt-item>
+    </ul>
+</li>
