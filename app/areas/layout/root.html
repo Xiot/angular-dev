@@ -1,9 +1,31 @@
 <div>{{message}}</div>
 
-<ul tree family="data">
-    <p>{{family.name}}</p>
-</ultree>
+<form name="form">
+    <input validating-model="model.firstName" name="firstName" />
+    <button ng-click="model.$commit()">Commit</button>
+    <button ng-click="model.$rollback()">Rollback</button>
 
+    <div>FirstName: {{model.firstName}}</div>
+
+    <div>Dirty: {{model.$dirty}}</div>
+    <div><pre>Patch:
+{{model.getPatch().operations}}</pre></div>
+
+
+    <input validating-model="model.firstNameMatch" name="firstNameMatch" focus-me />
+    <div>FirstNameMatch: {{model.firstNameMatch}}</div>
+    <div><pre>{{form.firstNameMatch | json}}</pre></div>
+    
+
+
+
+    <!--<div><pre>Model: {{form.firstName | json}}</pre></div>-->
+    
+</form>
+
+<!--<ul tree family="data">
+    <p>{{family.name}}</p>
+</ultree>-->
 <!--<ul hdt items="list">
     <a>{{item.name}}</a>
 </ul>-->

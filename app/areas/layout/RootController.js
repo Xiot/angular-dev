@@ -1,8 +1,9 @@
 ﻿angular.module('dev').controller('RootController',
-    function ($scope) {
+    function ($scope, validationService) {
         $scope.message = "Hello World";
 
-
+        $scope.model = validationService.get('person', { firstName: 'Chris',firstNameMatch: 'Chris' });
+        
         $scope.list = [
             {
                 name: "Chris",
