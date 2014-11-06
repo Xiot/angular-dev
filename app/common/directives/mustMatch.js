@@ -42,8 +42,8 @@
 
              }, function (currentValue) {
                  controller.$setValidity('mustMatch', currentValue);
-                 if (!currentValue)
-                     controller.$setModelValue(undefined);
+                 //if (!currentValue)
+                 //    controller.$setModelValue(undefined);
              });
              
 

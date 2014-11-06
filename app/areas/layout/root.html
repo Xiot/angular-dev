@@ -1,7 +1,16 @@
 <div>{{message}}</div>
 
+<button ng-click="setLanguage('fr')" translate="LANGUAGE.FR"></button>
+<button ng-click="setLanguage('en')" translate="LANGUAGE.EN" ></button>
+
 <form name="form">
-    <input validating-model="model.firstName" name="firstName" />
+    <div class="form-group">
+        <input validating-model="model.firstName" name="firstName" autocomplete="off" focus-me />
+        <div>
+            <validation-error name="firstName"></validation-error>
+        </div>
+    </div>
+    
     <button ng-click="model.$commit()">Commit</button>
     <button ng-click="model.$rollback()">Rollback</button>
 
@@ -12,7 +21,7 @@
 {{model.getPatch().operations}}</pre></div>
 
 
-    <input validating-model="model.firstNameMatch" name="firstNameMatch" focus-me />
+    <input validating-model="model.firstNameMatch" name="firstNameMatch" />
     <div>FirstNameMatch: {{model.firstNameMatch}}</div>
     <div><pre>{{form.firstNameMatch | json}}</pre></div>
     

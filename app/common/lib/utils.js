@@ -263,7 +263,7 @@ function CreateJsonPatch(left, right, propertiesToIgnore) {
             continue;
 
         if (leftValue == undefined || leftValue != rightValue) {
-            console.log(propertyName + ': ' + leftValue + ' -> ' + rightValue);
+            //console.log(propertyName + ': ' + leftValue + ' -> ' + rightValue);
             patch.replace(propertyName, rightValue);
         }
     }

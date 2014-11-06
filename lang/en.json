@@ -1,0 +1,11 @@
+﻿{
+    "ERRORS": {
+        "required": "The field is required",
+        "minlength": "Must be at least {{param}} characters long.",
+        "mustMatch": "Must be the same."
+    },
+    "LANGUAGE": {
+        "EN": "English",
+        "FR":  "French"
+    }
+}

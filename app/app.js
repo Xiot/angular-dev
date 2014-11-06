@@ -1,19 +1,35 @@
-angular.module('dev', ['ui.router']);
+angular.module('dev', ['ui.router', 'pascalprecht.translate']);
 
 
 angular.module('dev')
 .config(function (validationServiceProvider) {
 
+
+    validationServiceProvider
+        .property('required', {
+            directive: 'ng-required',
+            param: true,
+            messageKey: 'ERRORS.required',
+            message: 'Required!',
+        })
+    .property('minlength', {})
+    .property('maxlength', {})
+    .property('pattern', {})
+    .property('mustMatch', {
+        directive: 'must-match',
+        messageKey: 'ERRORS.mustMatch'
+    });
+
     var person = new ValidationObject();
 
     person.validations.firstName = {
-        'ng-required': true,
-        'ng-minlength': 5
+        'required': true,
+        'minlength': 5
     };
     person.validations.firstNameMatch = {
-        'must-match': '.firstName',
-        'ng-required': true,
-        'ng-minlength': 5
+        'mustMatch': '.firstName',
+        'required': true,
+        'minlength': 5
     };
 
     //validator.add('firstName', 'ng-required', true);
@@ -24,3 +40,11 @@ angular.module('dev')
     validationServiceProvider.addValidator('person', person);
 
 });
+
+angular.module('dev').config(function ($translateProvider) {
+    $translateProvider.useStaticFilesLoader({
+        prefix: '/lang/',
+        suffix: '.json'
+    });
+    $translateProvider.preferredLanguage('en');
+})

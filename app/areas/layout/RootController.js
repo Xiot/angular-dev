@@ -1,9 +1,9 @@
 ﻿angular.module('dev').controller('RootController',
-    function ($scope, validationService) {
+    function ($scope, validationService, $translate) {
         $scope.message = "Hello World";
 
-        $scope.model = validationService.get('person', { firstName: 'Chris',firstNameMatch: 'Chris' });
-        
+        $scope.model = validationService.get('person', { firstName: 'Chris', firstNameMatch: 'Chris' });
+
         $scope.list = [
             {
                 name: "Chris",
@@ -20,7 +20,7 @@
             },
             {
                 name: "Sarah",
-                items: [{name: "Jill"}]
+                items: [{ name: "Jill" }]
 
             }
         ]
@@ -38,4 +38,7 @@
             ]
         };
 
+        $scope.setLanguage = function (code) {
+            $translate.use(code);
+        }
     });
