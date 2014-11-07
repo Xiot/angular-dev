@@ -3,22 +3,20 @@ angular.module('dev', ['ui.router', 'pascalprecht.translate']);
 
 angular.module('dev')
 .config(function (validationServiceProvider) {
-
-
+    
     validationServiceProvider
-        .property('required', {
+        .validator('required', {
             directive: 'ng-required',
-            param: true,
             messageKey: 'ERRORS.required',
             message: 'Required!',
         })
-    .property('minlength', {})
-    .property('maxlength', {})
-    .property('pattern', {})
-    .property('mustMatch', {
-        directive: 'must-match',
-        messageKey: 'ERRORS.mustMatch'
-    });
+        .validator('minlength')
+        .validator('maxlength')
+        .validator('pattern')
+        .validator('mustMatch', {
+            directive: 'must-match',
+            messageKey: 'ERRORS.mustMatch'
+        });
 
     var person = new ValidationObject();
 
@@ -31,11 +29,6 @@ angular.module('dev')
         'required': true,
         'minlength': 5
     };
-
-    //validator.add('firstName', 'ng-required', true);
-    //validator.add('firstName', 'ng-minlength', 5);
-    //validator.add('firstNameMatch', 'must-match', '.firstName');
-    //validator.add('firstNameMatch', 'ng-required', true);
 
     validationServiceProvider.addValidator('person', person);
 

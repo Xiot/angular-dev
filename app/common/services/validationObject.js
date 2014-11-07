@@ -19,11 +19,27 @@
     */
 
     var propertyValidators = {};
-    this.property = function(name, options){
-        propertyValidators[name] = angular.extend({}, options, { name: name });
+    this.validator = function (name, options) {
+
+        var validation = normalizeValidator(name, options);
+        
+        propertyValidators[name] = validation;
         return this;
     }
 
+    function normalizeValidator(name, options) {
+        
+        options = options || {};
+
+        if (!options.messageKey && !options.message)
+            options.messageKey = "ERRORS." + name;
+
+        if (!options.directive)
+            options.directive = "ng-" + name;
+
+        options.name = name;
+        return options;
+    }
 
     this.addValidator = function (name, validator) {
 

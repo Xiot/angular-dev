@@ -1,30 +1,44 @@
 ﻿angular.module('dev')
-.directive('validationError', function ($translate) {
+.directive('validationError', function ($translate, $rootScope) {
+
+    function updateErrors(scope, modelErrors) {
+        //scope.er = modelErrors;
+        scope.em = {};
+
+        if (!modelErrors)
+            return;
+
+        var validating = scope.$model.$validatingModel;
+
+        for (var p in modelErrors) {
+            var map = validating.$validators[p];
+
+            $translate(map.messageKey, { param: map.param }).then(function (x) {
+                scope.em[p] = x;
+            });
+        }
+    }
+
     return {
         restrict: 'E',
         require: ['^form'],
+        scope: true,
         templateUrl: 'app/common/directives/validations/validationError.html',
         link: function (scope, element, attrs, controllers) {
+            
             var form = controllers[0];
-            var model = form[attrs.name];
-            var validating = model.$validatingModel;
+            scope.$model = form[attrs.name];
 
-            scope.$model = model;
+            var unbindTranslate = $rootScope.$on('$translateChangeSuccess', function () {
+                updateErrors(scope, scope.$model.$error);
+            });
+
+            $rootScope.$on('$destroy', function () {
+                unbindTranslate();
+            })
 
             scope.$watchCollection("$model.$error", function (e) {
-                scope.er = e;
-                scope.em = {};
-                if (!e)
-                    return;
-
-                for (var p in e) {
-                    var map = validating.$validators[p];
-
-                    $translate(map.messageKey, { param: map.param }).then(function(x){
-                        scope.em[p] = x;
-                    });
-                }
-
+                updateErrors(scope, e);
             });
 
         }

@@ -68,6 +68,11 @@ angular.module('dev').directive('validatingModel', function ($compile, $translat
                             return form[attrs.name];
                         }, function (ngModel) {
                             ngModel.$validatingModel = controller;
+
+                            ngModel.$needsAttention = function () {
+                                return ngModel.$invalid && (ngModel.$dirty || ngModel.$touched || form.$submitted);
+                            }
+
                             unbind();
                         });
                     }

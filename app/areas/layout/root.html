@@ -2,17 +2,17 @@
 
 <button ng-click="setLanguage('fr')" translate="LANGUAGE.FR"></button>
 <button ng-click="setLanguage('en')" translate="LANGUAGE.EN" ></button>
-
-<form name="form">
-    <div class="form-group">
-        <input validating-model="model.firstName" name="firstName" autocomplete="off" focus-me />
-        <div>
-            <validation-error name="firstName"></validation-error>
-        </div>
+<!-- form.firstName.$invalid && (form.firstName.$dirty || form.firstName.$touched || form.$submitted )-->
+<form name="form"ng-submit="onSubmit($event)">
+    <div class="form-group" ng-class="{'has-error': form.firstName.$needsAttention() }">
+        <label class="control-label" for="firstName">First Name</label>
+        <input class="form-control" validating-model="model.firstName" name="firstName" autocomplete="off" focus-me />
+        <validation-error name="firstName"></validation-error>
     </div>
     
     <button ng-click="model.$commit()">Commit</button>
     <button ng-click="model.$rollback()">Rollback</button>
+    <button type="submit">Submit</button>
 
     <div>FirstName: {{model.firstName}}</div>
 
@@ -22,8 +22,8 @@
 
 
     <input validating-model="model.firstNameMatch" name="firstNameMatch" />
-    <div>FirstNameMatch: {{model.firstNameMatch}}</div>
-    <div><pre>{{form.firstNameMatch | json}}</pre></div>
+    <div>FirstNameMatch: {{model.firstNameMatch}}</div>    
+    <div><pre>{{form.firstName | json}}</pre></div>
     
 
 

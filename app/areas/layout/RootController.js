@@ -2,7 +2,7 @@
     function ($scope, validationService, $translate) {
         $scope.message = "Hello World";
 
-        $scope.model = validationService.get('person', { firstName: 'Chris', firstNameMatch: 'Chris' });
+        $scope.model = validationService.get('person', { firstName: 'Chr', firstNameMatch: 'Chris' });
 
         $scope.list = [
             {
@@ -40,5 +40,9 @@
 
         $scope.setLanguage = function (code) {
             $translate.use(code);
-        }
+        };
+
+        $scope.onSubmit = function (e) {
+            alert('submit');
+        };
     });
