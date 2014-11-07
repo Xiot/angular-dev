@@ -61,11 +61,9 @@ angular.module('dev').directive('validatingModel', function ($compile, $translat
 
                     controller.modelPath = modelPath;
                     controller.$validators = validators;
-
-                    //data.model.$validatingModel = controller;
-
+                    
                     if (form) {
-                        //form[attrs.name].$validatingModel = controller;
+                        
                         var unbind = scope.$watch(function () {
                             return form[attrs.name];
                         }, function (ngModel) {
@@ -73,8 +71,7 @@ angular.module('dev').directive('validatingModel', function ($compile, $translat
                             unbind();
                         });
                     }
-
-
+                    
                     var compiled = $compile(iElement)(scope);
                 }
             }

@@ -18,9 +18,6 @@
                     return;
 
                 for (var p in e) {
-                    //var keyName = "ERRORS." + p;
-
-                    //var map = validating.$validators[p] || validating.$validators['ng-' + p];
                     var map = validating.$validators[p];
 
                     $translate(map.messageKey, { param: map.param }).then(function(x){
