@@ -3,7 +3,7 @@ angular.module('dev', ['ui.router', 'pascalprecht.translate']);
 
 angular.module('dev')
 .config(function (validationServiceProvider, modelDefinitionServiceProvider) {
-    
+
     validationServiceProvider
         .validator('required', {
             directive: 'ng-required',
@@ -19,29 +19,30 @@ angular.module('dev')
         })
         .validator('email', {
             type: 'email'
+        })
+        .validator('min', {
+            directive: 'min',
+            messageKey: 'ERRORS.min'
         });
-    
-    //var person = new ValidationObject();
 
-    //person.validations.firstName = {
-    //    'required': true,
-    //    'minlength': 5
-    //};
-    //person.validations.firstNameMatch = {
-    //    'mustMatch': '.firstName',
-    //    'required': true,
-    //    'minlength': 5
-    //};
-    //person.validations.email = {
-    //    required: true,
-    //    email: true
-    //};
-    
-    //validationServiceProvider.addValidator('person', person);
+    modelDefinitionServiceProvider
+        .addFieldType('string', {
+            element: "<input type='text'></input>"
+        })
+        .addFieldType('email', {
+            element: "<input type='email'></input>"
+        })
+        .addFieldType('int', {
+            element: "<input type='number'></input>",
+            validations: {
+                pattern: /[0-9]+/
+            }
+        });
 
 
     var personDefinition = new ModelDefinition('person');
     personDefinition.firstName = {
+        type: 'string',
         validations: {
             required: true,
             minlength: 5,
@@ -55,9 +56,17 @@ angular.module('dev')
     };
 
     personDefinition.email = {
+        type: 'email',
         validations: {
             required: true,
             email: true
+        }
+    }
+
+    personDefinition.age = {
+        type: 'int',
+        validations: {
+            min: 0
         }
     }
 

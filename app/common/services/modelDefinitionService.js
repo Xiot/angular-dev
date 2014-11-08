@@ -8,11 +8,16 @@ function ModelDefinition(name) {
 angular.module('dev').provider('modelDefinitionService', function() {
 
     var definitions = {};
+    var fieldTypes = {};
 
     this.add = function(definition) {
         definitions[definition.$name] = definition;
     }
 
+    this.addFieldType = function (name, fieldTypeDefinition) {
+        fieldTypes[name] = fieldTypeDefinition;
+        return this;
+    }
 
     this.$get = function(validationService) {
 
@@ -24,6 +29,12 @@ angular.module('dev').provider('modelDefinitionService', function() {
 
                     if (!field.labelKey)
                         field.labelKey = "FIELD." + fieldName;
+
+                    if (!field.type)
+                        field.type = 'string';
+
+
+
 
                     angular.forEach(field.validations, function(value, validationType) {
 
@@ -39,9 +50,7 @@ angular.module('dev').provider('modelDefinitionService', function() {
             });
         }
 
-
         initialize(validationService);
-        
 
         return {
             create: function(modelType, model) {
@@ -50,10 +59,9 @@ angular.module('dev').provider('modelDefinitionService', function() {
 
                 var wrapper = new ValidationObject(definition, model);
                 return wrapper;
-
-                //var blueprint = angular.copy(validators[name]);
-                //blueprint.setObject(obj);
-                //return blueprint;
+            },
+            getFieldTypeDefinition: function (name) {
+                return fieldTypes[name];
             }
         }
 

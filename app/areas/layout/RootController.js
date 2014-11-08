@@ -6,7 +6,8 @@
         var person = {
             firstName: 'Chr',
             firstNameMatch: 'Chris',
-            email: "cthomas@microdea.com"
+            email: "cthomas@microdea.com",
+            age: 33
         };
 
         $scope.model = modelDefinitionService.create('person', person);
