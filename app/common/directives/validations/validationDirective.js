@@ -10,9 +10,15 @@ angular.module('dev').directive('validatingModel', function ($compile, $translat
         angular.forEach(validations, function (value, key) {
 
             var directiveName = value.directive;
-            var params = value.param;
+            if (directiveName) {
+                var params = value.param;
+                element.attr(directiveName, params);
+            }
 
-            element.attr(directiveName, params);
+            if (value.type) {
+                element.attr('type', value.type);
+            }
+
         });
     }
     
@@ -24,13 +30,13 @@ angular.module('dev').directive('validatingModel', function ($compile, $translat
 
         var model = scope.$eval(vm);
 
-        var validators = model.getValidationsFor(propertyName);
+        var fieldDefinition = model.definition[propertyName];//getValidationsFor(propertyName);
         //return validators;
 
         return {
             model: model,
             name: propertyName,
-            validators: validators
+            definition: fieldDefinition
         };
 
     }
@@ -55,24 +61,29 @@ angular.module('dev').directive('validatingModel', function ($compile, $translat
                     var form = controllers.length > 1 && controllers[1];
 
                     var data = parsePath(scope, modelPath);
-
-                    var validators = data.validators;
-                    setValidations(iElement, validators);
+                    
+                    var definition = data.definition;
+                    setValidations(iElement, definition.validations);
 
                     controller.modelPath = modelPath;
-                    controller.$validators = validators;
+                    controller.$definition = definition;
+                    controller.messageKey = definition.labelKey;
                     
                     if (form) {
                         
                         var unbind = scope.$watch(function () {
                             return form[attrs.name];
+
                         }, function (ngModel) {
                             ngModel.$validatingModel = controller;
-
-                            ngModel.$needsAttention = function () {
+                            
+                            scope.$watch(function () {
                                 return ngModel.$invalid && (ngModel.$dirty || ngModel.$touched || form.$submitted);
-                            }
 
+                            }, function(value) {
+                                ngModel.$needsAttention = value;
+                            });
+                            
                             unbind();
                         });
                     }

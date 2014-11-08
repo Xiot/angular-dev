@@ -7,7 +7,7 @@
 
                 $timeout(function () {
                     element[0].focus();
-                }, 300);
+                }, 0);
 
             }
         };

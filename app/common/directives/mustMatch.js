@@ -24,27 +24,27 @@
 
              }
              
-             //controller.$validators.mustMatch = function (modelValue, viewValue) {
-             //    var targetValue = getTargetValue();
-             //    return targetValue === modelValue;
-             //}
+             controller.$validators.mustMatch = function (modelValue, viewValue) {
+                 var targetValue = getTargetValue();
+                 return targetValue === modelValue;
+             }
 
              // 1.2 way
              
-             scope.$watch(function () {
+             //scope.$watch(function () {
 
-                 var targetValue = getTargetValue();
-                 var checkValue = controller.$modelValue;
+             //    var targetValue = getTargetValue();
+             //    var checkValue = controller.$modelValue;
 
-                 var isValid = targetValue === checkValue;
+             //    var isValid = targetValue === checkValue;
 
-                 return isValid;
+             //    return isValid;
 
-             }, function (currentValue) {
-                 controller.$setValidity('mustMatch', currentValue);
-                 //if (!currentValue)
-                 //    controller.$setModelValue(undefined);
-             });
+             //}, function (currentValue) {
+             //    controller.$setValidity('mustMatch', currentValue);
+             //    //if (!currentValue)
+             //    //    controller.$setModelValue(undefined);
+             //});
              
 
          }

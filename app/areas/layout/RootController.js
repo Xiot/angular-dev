@@ -1,43 +1,16 @@
 ﻿angular.module('dev').controller('RootController',
-    function ($scope, validationService, $translate) {
+    function ($scope, modelDefinitionService, $translate) {
         $scope.message = "Hello World";
 
-        $scope.model = validationService.get('person', { firstName: 'Chr', firstNameMatch: 'Chris' });
 
-        $scope.list = [
-            {
-                name: "Chris",
-                items: [
-                    {
-                        name: "Joe",
-                    },
-                    {
-                        name: "Bob",
-                        items: [{ name: "Bill" }]
-
-                    }
-                ]
-            },
-            {
-                name: "Sarah",
-                items: [{ name: "Jill" }]
-
-            }
-        ]
-        $scope.data = {
-            name: "Chris",
-            children: [
-                {
-                    name: "Joe",
-                },
-                {
-                    name: "Bob",
-                    children: [{ name: "Bill" }]
-
-                }
-            ]
+        var person = {
+            firstName: 'Chr',
+            firstNameMatch: 'Chris',
+            email: "cthomas@microdea.com"
         };
 
+        $scope.model = modelDefinitionService.create('person', person);
+        
         $scope.setLanguage = function (code) {
             $translate.use(code);
         };

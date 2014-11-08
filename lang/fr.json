@@ -1,11 +1,17 @@
 ﻿{
     "ERRORS": {
-        "required": "The field is required",
+        "required": "Le champ est obligatoire.",
         "minlength": "Doit être au moins {{param}} caractères.",
-        "mustMatch":  "Must be the same."
+        "mustMatch": "Doit être le même.",
+        "email": "Adresse e-mail valide",
+        "INVALID_NAME":  "Les noms doivent seulement contenir des lettres."
     },
     "LANGUAGE": {
         "EN": "Anglais",
         "FR":  "Français"
+    },
+    "FIELD": {
+        "FIRSTNAME": "Prénom",
+        "email":  "Email in French"
     }
 }

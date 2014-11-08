@@ -2,42 +2,49 @@
 .directive('validationError', function ($translate, $rootScope) {
 
     function updateErrors(scope, modelErrors) {
-        //scope.er = modelErrors;
-        scope.em = {};
+        
+        scope.$errors = {};
 
         if (!modelErrors)
             return;
 
-        var validating = scope.$model.$validatingModel;
+        var validating = scope.$field.$validatingModel;
 
-        for (var p in modelErrors) {
-            var map = validating.$validators[p];
+        angular.forEach(modelErrors, function (value, key) {
 
-            $translate(map.messageKey, { param: map.param }).then(function (x) {
-                scope.em[p] = x;
-            });
-        }
+            var map = validating.$definition.validations[key];
+
+            var message = $translate.instant(map.messageKey, { param: map.param });
+            scope.$errors[map.name] = message;
+
+            // Validator messages should be sorted by priority, and the highest priority should be set as $$first
+            if (!scope.$errors.$$first)
+                scope.$errors.$$first = message;
+        });
     }
 
     return {
         restrict: 'E',
-        require: ['^form'],
-        scope: true,
+        require: '?^form',        
+        scope: {
+            $field:'=?field'
+        },
         templateUrl: 'app/common/directives/validations/validationError.html',
-        link: function (scope, element, attrs, controllers) {
+        link: function (scope, element, attrs, form) {
             
-            var form = controllers[0];
-            scope.$model = form[attrs.name];
+            // Grab the ngModel directly from the $field attribute, or use the form and `name` property
+            if (!scope.$field && form && attrs.name)
+                scope.$field = form[attrs.name];
 
             var unbindTranslate = $rootScope.$on('$translateChangeSuccess', function () {
-                updateErrors(scope, scope.$model.$error);
+                updateErrors(scope, scope.$field.$error);
             });
 
-            $rootScope.$on('$destroy', function () {
+            scope.$on('$destroy', function () {
                 unbindTranslate();
-            })
+            });
 
-            scope.$watchCollection("$model.$error", function (e) {
+            scope.$watchCollection("$field.$error", function (e) {
                 updateErrors(scope, e);
             });
 

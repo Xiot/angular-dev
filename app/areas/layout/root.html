@@ -3,34 +3,47 @@
 <button ng-click="setLanguage('fr')" translate="LANGUAGE.FR"></button>
 <button ng-click="setLanguage('en')" translate="LANGUAGE.EN" ></button>
 <!-- form.firstName.$invalid && (form.firstName.$dirty || form.firstName.$touched || form.$submitted )-->
-<form name="form"ng-submit="onSubmit($event)">
-    <div class="form-group" ng-class="{'has-error': form.firstName.$needsAttention() }">
-        <label class="control-label" for="firstName">First Name</label>
-        <input class="form-control" validating-model="model.firstName" name="firstName" autocomplete="off" focus-me />
-        <validation-error name="firstName"></validation-error>
-    </div>
+<form name="form">
     
+    <!--<div class="form-group" ng-class="{'has-error': form.firstName2.$needsAttention }">
+        <label class="control-label" for="firstName2">First Name</label><span>{{form.firstName.$error}}</span>
+        <input class="form-control" validating-model="model.firstName" name="firstName2" autocomplete="off"  />
+        <validation-error name="firstName2"></validation-error>
+    </div>-->
+
+
+    
+    <validating-field field-model="model.firstName"
+                      
+                      input-autocomplete="off">
+
+    </validating-field>
+    
+    <!--<validating-field field-model="model.firstNameMatch"
+                      label-translate="FIELD.FIRSTNAME">
+
+    </validating-field>-->
+    
+    <validating-field field-model="model.email"></validating-field>
+
     <button ng-click="model.$commit()">Commit</button>
     <button ng-click="model.$rollback()">Rollback</button>
     <button type="submit">Submit</button>
 
     <div>FirstName: {{model.firstName}}</div>
+    <div>FirstNameMatch: {{model.firstNameMatch}}</div>
 
-    <div>Dirty: {{model.$dirty}}</div>
-    <div><pre>Patch:
-{{model.getPatch().operations}}</pre></div>
-
-
-    <input validating-model="model.firstNameMatch" name="firstNameMatch" />
-    <div>FirstNameMatch: {{model.firstNameMatch}}</div>    
-    <div><pre>{{form.firstName | json}}</pre></div>
-    
+    <!--<div>Dirty: {{model.$dirty}}</div>
+        <div><pre>Patch:
+    {{model.getPatch().operations}}</pre></div>
 
 
+        <input validating-model="model.firstNameMatch" name="firstNameMatch" />
+        <div>FirstNameMatch: {{model.firstNameMatch}}</div>
+        <div><pre>{{form.firstName | json}}</pre></div>-->
 
-    <!--<div><pre>Model: {{form.firstName | json}}</pre></div>-->
-    
 </form>
+
 
 <!--<ul tree family="data">
     <p>{{family.name}}</p>

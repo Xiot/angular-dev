@@ -2,7 +2,7 @@ angular.module('dev', ['ui.router', 'pascalprecht.translate']);
 
 
 angular.module('dev')
-.config(function (validationServiceProvider) {
+.config(function (validationServiceProvider, modelDefinitionServiceProvider) {
     
     validationServiceProvider
         .validator('required', {
@@ -16,22 +16,52 @@ angular.module('dev')
         .validator('mustMatch', {
             directive: 'must-match',
             messageKey: 'ERRORS.mustMatch'
+        })
+        .validator('email', {
+            type: 'email'
         });
+    
+    //var person = new ValidationObject();
 
-    var person = new ValidationObject();
+    //person.validations.firstName = {
+    //    'required': true,
+    //    'minlength': 5
+    //};
+    //person.validations.firstNameMatch = {
+    //    'mustMatch': '.firstName',
+    //    'required': true,
+    //    'minlength': 5
+    //};
+    //person.validations.email = {
+    //    required: true,
+    //    email: true
+    //};
+    
+    //validationServiceProvider.addValidator('person', person);
 
-    person.validations.firstName = {
-        'required': true,
-        'minlength': 5
+
+    var personDefinition = new ModelDefinition('person');
+    personDefinition.firstName = {
+        validations: {
+            required: true,
+            minlength: 5,
+            maxlength: 10,
+            pattern: {
+                param: "/^[a-z]+$/i",
+                messageKey: 'ERRORS.INVALID_NAME'
+            }
+        },
+        labelKey: 'FIELD.FIRSTNAME'
     };
-    person.validations.firstNameMatch = {
-        'mustMatch': '.firstName',
-        'required': true,
-        'minlength': 5
-    };
 
-    validationServiceProvider.addValidator('person', person);
+    personDefinition.email = {
+        validations: {
+            required: true,
+            email: true
+        }
+    }
 
+    modelDefinitionServiceProvider.add(personDefinition);
 });
 
 angular.module('dev').config(function ($translateProvider) {
@@ -39,5 +69,5 @@ angular.module('dev').config(function ($translateProvider) {
         prefix: '/lang/',
         suffix: '.json'
     });
-    $translateProvider.preferredLanguage('en');
+    $translateProvider.preferredLanguage('en').fallbackLanguage('en');
 })
