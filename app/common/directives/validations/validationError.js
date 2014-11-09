@@ -8,11 +8,15 @@
         if (!modelErrors)
             return;
 
-        var validating = scope.$field.$validatingModel;
+        //var validating = scope.$field.$validatingModel;
+        var definition = scope.$field.$definition || (scope.$field.$validatingModel && scope.$field.$validatingModel.$definition);
+        if (!definition)
+            return;
 
         angular.forEach(modelErrors, function (value, key) {
 
-            var map = validating.$definition.validations[key];
+            //var map = validating.$definition.validations[key];
+            var map = definition.validations[key];
 
             var message = $translate.instant(map.messageKey, { param: map.param });
             scope.$errors[map.name] = message;
@@ -37,7 +41,9 @@
                 scope.$field = form[attrs.name];
 
             var unbindTranslate = $rootScope.$on('$translateChangeSuccess', function () {
-                updateErrors(scope, scope.$field.$error);
+
+                var errors = scope.$field && scope.$field.$error;
+                updateErrors(scope, errors);
             });
 
             scope.$on('$destroy', function () {
@@ -47,6 +53,11 @@
             scope.$watchCollection("$field.$error", function (e) {
                 updateErrors(scope, e);
             });
+            scope.$watch('$field.$definition', function (e) {
+
+                var errors = scope.$field && scope.$field.$error;
+                updateErrors(scope, errors);
+            })
 
         }
     }

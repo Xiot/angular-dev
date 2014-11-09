@@ -27,15 +27,14 @@ angular.module('dev').provider('modelDefinitionService', function() {
 
                 angular.forEach(def, function (field, fieldName) {
 
+                    field.$modelType = defName;
+
                     if (!field.labelKey)
                         field.labelKey = "FIELD." + fieldName;
 
                     if (!field.type)
                         field.type = 'string';
-
-
-
-
+                    
                     angular.forEach(field.validations, function(value, validationType) {
 
                         if (!angular.isObject(value))
@@ -60,8 +59,11 @@ angular.module('dev').provider('modelDefinitionService', function() {
                 var wrapper = new ValidationObject(definition, model);
                 return wrapper;
             },
+            get: function(modelType){
+                return definitions[modelType];
+            },
             getFieldTypeDefinition: function (name) {
-                return fieldTypes[name];
+                return fieldTypes[name] || {element: "<input class='form-control'><input>"};
             }
         }
 

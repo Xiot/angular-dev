@@ -27,13 +27,13 @@ angular.module('dev')
 
     modelDefinitionServiceProvider
         .addFieldType('string', {
-            element: "<input type='text'></input>"
+            element: "<input class='form-control' type='text'></input>"
         })
         .addFieldType('email', {
-            element: "<input type='email'></input>"
+            element: "<input type='email' class='form-control'></input>"
         })
         .addFieldType('int', {
-            element: "<input type='number'></input>",
+            element: "<input type='number' class='form-control'></input>",
             validations: {
                 pattern: /[0-9]+/
             }
