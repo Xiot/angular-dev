@@ -23,19 +23,27 @@ angular.module('dev')
         .validator('min', {
             directive: 'min',
             messageKey: 'ERRORS.min'
+        })
+        .validator('number', {
+            type: 'number',
+            messageKey: "ERRORS.NAN"
         });
 
     modelDefinitionServiceProvider
         .addFieldType('string', {
-            element: "<input class='form-control' type='text'></input>"
+            element: "<input type='text'></input>"
         })
         .addFieldType('email', {
-            element: "<input type='email' class='form-control'></input>"
+            element: "<input type='email'></input>"
         })
         .addFieldType('int', {
-            element: "<input type='number' class='form-control'></input>",
+            element: "<input type='number' ng-trim='false'></input>",            
             validations: {
-                pattern: /[0-9]+/
+                pattern: {
+                    param: "/^-?[0-9]+$/",
+                    messageKey: "ERRORS.INTEGER"
+                    },
+                number: true
             }
         });
 

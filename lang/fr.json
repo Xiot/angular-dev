@@ -12,6 +12,7 @@
     },
     "FIELD": {
         "FIRSTNAME": "Prénom",
-        "email":  "Email in French"
+        "email": "Email in French",
+        "age":  "âge"
     }
 }

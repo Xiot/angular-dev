@@ -18,8 +18,10 @@
             //var map = validating.$definition.validations[key];
             var map = definition.validations[key];
 
-            var message = $translate.instant(map.messageKey, { param: map.param });
-            scope.$errors[map.name] = message;
+            var message =map 
+                ? $translate.instant(map.messageKey, { param: map.param })
+                : 'VALIDATION TYPE NOT DEFINED \'' + key + "'.";
+            scope.$errors[key] = message;
 
             // Validator messages should be sorted by priority, and the highest priority should be set as $$first
             if (!scope.$errors.$$first)

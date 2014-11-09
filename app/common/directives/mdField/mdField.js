@@ -37,6 +37,16 @@ angular.module('dev').directive('mdField', function ($compile, modelDefinitionSe
         };
     }
 
+    var copyAttributesFrom = function (target, source) {
+
+        if (!source)
+            return;
+
+        angular.forEach(source[0].attributes, function (attr) {
+            if (!target.attr(attr.name))
+                target.attr(attr.name, attr.value);
+        });
+    };
 
     var copyAttributes = function (target, prefix, attrs) {
 
@@ -50,6 +60,7 @@ angular.module('dev').directive('mdField', function ($compile, modelDefinitionSe
     }
 
     function setValidations(element, validations) {
+
         angular.forEach(validations, function (value, key) {
 
             var directiveName = value.directive;
@@ -58,7 +69,7 @@ angular.module('dev').directive('mdField', function ($compile, modelDefinitionSe
                 element.attr(directiveName, params);
             }
 
-            if (value.type) {
+            if (value.type && !element.attr('type')) {
                 element.attr('type', value.type);
             }
 
@@ -105,10 +116,11 @@ angular.module('dev').directive('mdField', function ($compile, modelDefinitionSe
             setValidations(inputTemplate, fieldDefinition.validations);
             copyAttributes(inputTemplate, 'input', attrs);
 
+
             // may not need to clone
             var contents = element.children().clone();
-
             var input = contents.find('input');
+            copyAttributesFrom(inputTemplate, input);
             input.replaceWith(inputTemplate);
 
             var validationElement = contents.find('validation-error');

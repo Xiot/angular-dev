@@ -5,7 +5,10 @@
         "mustMatch": "Must be the same.",
         "email": "Invalid email address.",
         "INVALID_NAME": "Names must only consist of letters.",
-        "min":  "Value must be {{param}} or greater."
+        "min": "Value must be {{param}} or greater.",
+        "pattern": "Value does not match the pattern {{param}}",
+        "NAN": "Value must be a number",
+        "INTEGER":  "Value must be an integer"
     },
     "LANGUAGE": {
         "EN": "English",
@@ -13,6 +16,7 @@
     },
     "FIELD": {
         "FIRSTNAME": "First Name",
-        "email": "Email Address"        
+        "email": "Email Address",
+        "age":  "Age"
     }
 }

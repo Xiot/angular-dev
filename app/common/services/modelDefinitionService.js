@@ -1,7 +1,12 @@
 ﻿
 function ModelDefinition(name) {
     
-    this.$name = name;
+    //this.$name = name;
+
+    Object.defineProperty(this, '$name', {
+        value: name,
+        writable: false
+    });
 
 }
 
@@ -35,6 +40,10 @@ angular.module('dev').provider('modelDefinitionService', function() {
                     if (!field.type)
                         field.type = 'string';
                     
+                    var fieldTypeDefinition = fieldTypes[field.type];
+                    var validations = angular.extend({}, fieldTypeDefinition.validations, field.validations);
+                    field.validations = validations;
+
                     angular.forEach(field.validations, function(value, validationType) {
 
                         if (!angular.isObject(value))
