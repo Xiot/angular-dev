@@ -43,7 +43,7 @@ angular.module('dev').directive('mdField', function ($compile, modelDefinitionSe
             return;
 
         angular.forEach(source[0].attributes, function (attr) {
-            if (!target.attr(attr.name))
+            if (target.attr(attr.name) === undefined)
                 target.attr(attr.name, attr.value);
         });
     };
@@ -129,14 +129,21 @@ angular.module('dev').directive('mdField', function ($compile, modelDefinitionSe
 
                 var inputTemplate = createInputElement(scope, fieldType, fieldDefinition);
                 
-                inputTemplate.attr('ng-model', attrs.field);
-                inputTemplate.attr('name', propertyName);
+                // wrap the element in case there is more than 1 top level element returned
+                // this is done so we can properly search for the input elements
+                var wrap = angular.element('<div></div>');
+                wrap.append(inputTemplate);
 
-                setValidations(inputTemplate, fieldDefinition.validations);
-                copyAttributes(inputTemplate, 'input', attrs);
+                var inputElements = wrap.find('input');
+
+                inputElements.attr('ng-model', attrs.field);
+                inputElements.attr('name', propertyName);
+
+                setValidations(inputElements, fieldDefinition.validations);
+                copyAttributes(inputElements, 'input', attrs);
 
                 var input = fieldTemplate.find('input');
-                copyAttributesFrom(inputTemplate, input);
+                copyAttributesFrom(inputElements, input);
                 input.replaceWith(inputTemplate);
 
                 var validationElement = fieldTemplate.find('validation-error');
@@ -149,7 +156,7 @@ angular.module('dev').directive('mdField', function ($compile, modelDefinitionSe
                 element.append(fieldTemplate);
                 var clone = $compile(fieldTemplate)(scope);
 
-                var ngModel = inputTemplate.controller('ngModel');
+                var ngModel = inputElements.controller('ngModel'); //inputTemplate.controller('ngModel');
 
                 scope.$model = ngModel;
                 scope.$model.$definition = scope.$definition;

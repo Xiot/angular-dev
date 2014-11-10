@@ -10,7 +10,8 @@
             age: 33,
             birthDate: new Date(1981, 4, 28),
             hireDate: null,
-            gender: "Male"
+            gender: "Male",
+            employed: true
         };
 
         $scope.model = modelDefinitionService.create('person', person);

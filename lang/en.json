@@ -8,7 +8,7 @@
         "min": "Value must be {{param}} or greater.",
         "pattern": "Value does not match the pattern {{param}}",
         "NAN": "Value must be a number",
-        "INTEGER":  "Value must be an integer"
+        "INTEGER": "Value must be an integer"
     },
     "LANGUAGE": {
         "EN": "English",
@@ -17,6 +17,13 @@
     "FIELD": {
         "FIRSTNAME": "First Name",
         "email": "Email Address",
-        "age":  "Age"
+        "age": "Age",
+        "birthDate": "Birth Date",
+        "hireDate": "Hire Date",
+        "gender": "Gender"
+    },
+    "BOOL": {
+        "TRUE": "true",
+        "FALSE":  "false"
     }
 }

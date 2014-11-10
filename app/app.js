@@ -69,6 +69,26 @@ angular.module('dev')
                 //var el = angular.element("<select ng-options='value for value in localStuff'></select>");
                 return el;
             }
+        })
+        .addFieldType('boolean', {
+
+            /*
+            <div class="radio">
+  <label>
+    <input type="radio" name="optionsRadios" id="optionsRadios1" value="option1" checked>
+    Option one is this and that&mdash;be sure to include why it's great
+  </label>
+</div>
+            */
+            element: "<div>" +
+                        "<label class='radio-inline'>" +
+                            "<input type='radio' ng-value='true' class=''><span translate='BOOL.TRUE'></span>" +
+                        "</label>" +                     
+                        "<label class='radio-inline'>" +
+                            "<input type='radio' ng-value='false' class=''><span translate='BOOL.FALSE'></span>" +
+                        "</label>" +
+                     "</div>"
+            //element: "<input type='radio' ng-value='true'> True <input type='radio' ng-value='false'> False"
         });
 
     //TODO: Need way to load up enum values at runtime.
@@ -77,6 +97,8 @@ angular.module('dev')
 
     // TODO: Enable the definition of types at run time.
     // this will allow for definitions that will be retrieved from the server
+
+    // TODO: Add conditional validation
 
     var personDefinition = new ModelDefinition('person');
     personDefinition.firstName = {
@@ -133,6 +155,10 @@ angular.module('dev')
         }
     }
 
+    personDefinition.employed = {
+        type: 'boolean'
+    };
+
     modelDefinitionServiceProvider.add(personDefinition);
 });
 
@@ -141,5 +167,6 @@ angular.module('dev').config(function ($translateProvider) {
         prefix: '/lang/',
         suffix: '.json'
     });
-    $translateProvider.preferredLanguage('en').fallbackLanguage('en');
+    $translateProvider.preferredLanguage('en');
+    //$translateProvider.fallbackLanguage('en');
 })
