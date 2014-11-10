@@ -3,7 +3,7 @@
 <button ng-click="setLanguage('fr')" translate="LANGUAGE.FR"></button>
 <button ng-click="setLanguage('en')" translate="LANGUAGE.EN" ></button>
 <!-- form.firstName.$invalid && (form.firstName.$dirty || form.firstName.$touched || form.$submitted )-->
-<form name="form">
+<form name="form" md-submit="onSubmit($event)">
     
     <!--<div class="form-group" ng-class="{'has-error': form.firstName2.$needsAttention }">
         <label class="control-label" for="firstName2">First Name</label><span>{{form.firstName.$error}}</span>
@@ -17,9 +17,14 @@
 
     <!--<md-field field="model.firstName" input-autocomplete="off"></md-field>    
     <md-field field="model.email"></md-field>-->
-    <md-field field="model.age"></md-field>
 
-    {{model.firstName}}<br>
+    <md-field field="model.firstName" template-name="other" input-autocomplete="off"></md-field>    
+    
+    <md-field field="model.birthDate"></md-field>
+    <md-field field="model.hireDate"></md-field>
+    <md-field field="model.gender"></md-field>
+    <pre>{{form.$valid | json}}</pre>
+    
     <!--<validating-field field-model="model.age"></validating-field>-->
 
     <input ng-model="model.firstName" />

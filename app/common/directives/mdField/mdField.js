@@ -2,7 +2,7 @@
 
 });
 
-angular.module('dev').directive('mdField', function ($compile, modelDefinitionService) {
+angular.module('dev').directive('mdField', function ($compile, modelDefinitionService, templateFactory,$injector) {
 
     function parseFieldName(binding) {
         var split = binding.split('.');
@@ -76,6 +76,22 @@ angular.module('dev').directive('mdField', function ($compile, modelDefinitionSe
         });
     }
 
+    function createInputElement(scope, fieldType, definition) {
+
+        if (angular.isString(fieldType.element))
+            return angular.element(fieldType.element);
+
+        var element = $injector.invoke(
+            fieldType.element,
+            null,
+            {
+                $definition: definition,
+                $scope: scope
+            });
+        return element;
+
+    }
+
     // in order to make the ng-model on the inner input work, this can not create an isolated scope
     // this should then expose a controller on the scope to enable functionality downstream
 
@@ -83,69 +99,68 @@ angular.module('dev').directive('mdField', function ($compile, modelDefinitionSe
         priority: 200,
         require: ['mdField', '^form'],
         controller: 'MdFieldController',
-        templateUrl: 'app/common/directives/mdField/md-field.html',
+        //templateUrl: 'app/common/directives/mdField/md-field.html',
         scope: true,
         link: function (scope, element, attrs, controllers) {
 
-            var form = controllers[1];
-            var mdField = controllers[0];
+            templateFactory.getTemplate(attrs.templateName).then(function (fieldTemplate) {
 
-            var access = parseFieldName(attrs.field);
-            var propertyName = access.property;
+                var form = controllers[1];
+                var mdField = controllers[0];
 
-            var model = scope.$eval(access.model);
-            if (!model)
-                return;
+                var access = parseFieldName(attrs.field);
+                var propertyName = access.property;
 
-            var modelType = model.definition.$name;
-            if (!modelType)
-                return;
+                var model = scope.$eval(access.model);
+                if (!model)
+                    return;
 
-            var modelDefinition = modelDefinitionService.get(modelType);
-            if (!modelDefinition) return;
+                var modelType = model.definition.$name;
+                if (!modelType)
+                    return;
 
-            var fieldDefinition = modelDefinition[propertyName];
-            if (!fieldDefinition) return;
+                var modelDefinition = modelDefinitionService.get(modelType);
+                if (!modelDefinition) return;
 
-            var fieldType = modelDefinitionService.getFieldTypeDefinition(fieldDefinition.type);
+                var fieldDefinition = modelDefinition[propertyName];
+                if (!fieldDefinition) return;
 
-            var inputTemplate = angular.element(fieldType.element);
-            inputTemplate.attr('ng-model', attrs.field);
-            inputTemplate.attr('name', propertyName);
+                var fieldType = modelDefinitionService.getFieldTypeDefinition(fieldDefinition.type);
 
-            setValidations(inputTemplate, fieldDefinition.validations);
-            copyAttributes(inputTemplate, 'input', attrs);
+                var inputTemplate = createInputElement(scope, fieldType, fieldDefinition);
+                
+                inputTemplate.attr('ng-model', attrs.field);
+                inputTemplate.attr('name', propertyName);
 
+                setValidations(inputTemplate, fieldDefinition.validations);
+                copyAttributes(inputTemplate, 'input', attrs);
 
-            // may not need to clone
-            var contents = element.children().clone();
-            var input = contents.find('input');
-            copyAttributesFrom(inputTemplate, input);
-            input.replaceWith(inputTemplate);
+                var input = fieldTemplate.find('input');
+                copyAttributesFrom(inputTemplate, input);
+                input.replaceWith(inputTemplate);
 
-            var validationElement = contents.find('validation-error');
-            if (validationElement)
-                validationElement.attr('name', propertyName);
+                var validationElement = fieldTemplate.find('validation-error');
+                if (validationElement)
+                    validationElement.attr('name', propertyName);
 
-            scope.$definition = modelDefinition[propertyName];
+                scope.$definition = modelDefinition[propertyName];
 
-            element.html('');
-            element.append(contents);
-            var clone = $compile(contents)(scope);
+                element.html('');
+                element.append(fieldTemplate);
+                var clone = $compile(fieldTemplate)(scope);
 
-            var ngModel = inputTemplate.controller('ngModel');
+                var ngModel = inputTemplate.controller('ngModel');
 
-            scope.$model = ngModel;
-            scope.$model.$definition = scope.$definition;
+                scope.$model = ngModel;
+                scope.$model.$definition = scope.$definition;
 
-            scope.$watch(function () {
-                return ngModel.$invalid && (ngModel.$dirty || ngModel.$touched || form.$submitted);
+                scope.$watch(function () {
+                    return ngModel.$invalid && (ngModel.$dirty || ngModel.$touched || form.$submitted);
 
-            }, function (value) {
-                ngModel.$needsAttention = value;
-            });
-
-
+                }, function (value) {
+                    ngModel.$needsAttention = value;
+                });
+            })
         }
     }
 });

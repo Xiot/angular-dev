@@ -7,7 +7,10 @@
             firstName: 'Chr',
             firstNameMatch: 'Chris',
             email: "cthomas@microdea.com",
-            age: 33
+            age: 33,
+            birthDate: new Date(1981, 4, 28),
+            hireDate: null,
+            gender: "Male"
         };
 
         $scope.model = modelDefinitionService.create('person', person);

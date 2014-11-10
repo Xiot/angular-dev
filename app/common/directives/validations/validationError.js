@@ -8,14 +8,12 @@
         if (!modelErrors)
             return;
 
-        //var validating = scope.$field.$validatingModel;
         var definition = scope.$field.$definition || (scope.$field.$validatingModel && scope.$field.$validatingModel.$definition);
         if (!definition)
             return;
 
         angular.forEach(modelErrors, function (value, key) {
-
-            //var map = validating.$definition.validations[key];
+            
             var map = definition.validations[key];
 
             var message =map 
