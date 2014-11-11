@@ -156,7 +156,7 @@ angular.module('dev').directive('mdField', function ($compile, modelDefinitionSe
                 element.append(fieldTemplate);
                 var clone = $compile(fieldTemplate)(scope);
 
-                var ngModel = inputElements.controller('ngModel'); //inputTemplate.controller('ngModel');
+                var ngModel = inputElements.controller('ngModel');
 
                 scope.$model = ngModel;
                 scope.$model.$definition = scope.$definition;
