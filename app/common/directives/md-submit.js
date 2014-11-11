@@ -7,7 +7,7 @@
 
             var unbind = element.bind('submit', function (e) {
 
-                var firstInvalid = '';
+                var firstInvalidName = '';
 
                 angular.forEach(form, function (value, key) {
                     if (key.startsWith('$'))
@@ -18,15 +18,25 @@
 
                     value.$validate();
 
-                    if (!firstInvalid && value.$invalid)
-                        firstInvalid = value.$name;
+                    if (!firstInvalidName && value.$invalid)
+                        firstInvalidName = value.$name;
                 });
 
                 if (!form.$valid) {
-                    scope.$broadcast('scrollTo', firstInvalid);
+
+                    var firstInvalidElement = angular.element(element[0].querySelector(".ng-invalid"));
+
+                    if (firstInvalidElement) {
+
+                        firstInvalidName = firstInvalidElement.attr('scrollTarget')
+                            || firstInvalidElement.attr('name')
+                            || firstInvalidName;
+                    }
+
+                    scope.$broadcast('scrollTo', firstInvalidName);
                     return;
                 }
-                    
+
 
                 var fn = $parse(attrs.mdSubmit);
                 if (fn)

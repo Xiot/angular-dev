@@ -21,7 +21,7 @@
                 return scope.$eval(fullPropertyPath);
 
             }
-            var propertyPath = attrs.mustMatch;
+            
             ngModel.$validators.greaterThan = function (modelValue, viewValue) {
 
                 if (!modelValue)

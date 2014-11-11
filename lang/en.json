@@ -20,7 +20,8 @@
         "age": "Age",
         "birthDate": "Birth Date",
         "hireDate": "Hire Date",
-        "gender": "Gender"
+        "gender": "Gender",
+        "employed": "Employed"
     },
     "BOOL": {
         "TRUE": "true",

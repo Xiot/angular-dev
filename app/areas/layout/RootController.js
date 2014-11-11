@@ -11,7 +11,7 @@
             birthDate: new Date(1981, 4, 28),
             hireDate: null,
             gender: "Male",
-            employed: true
+            employed: null
         };
 
         $scope.model = modelDefinitionService.create('person', person);
