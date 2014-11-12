@@ -45,6 +45,8 @@
         return options;
     }
 
+
+    /*
     this.addValidator = function (name, validator) {
 
 
@@ -85,7 +87,7 @@
 
         return normalized;
     }
-
+    */
 
     this.$get = function () {
 

@@ -38,7 +38,6 @@ angular.module('dev').directive('validatingModel', function ($compile, $translat
             name: propertyName,
             definition: fieldDefinition
         };
-
     }
 
     return {
