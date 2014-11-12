@@ -16,20 +16,12 @@ angular.module('dev').directive('mdField', function ($compile, modelDefinitionSe
         }
     }
 
-    var SNAKE_CASE_REGEXP = /[A-Z]/g;
-    function snakeCase(name, separator) {
-        separator = separator || '_';
-        return name.replace(SNAKE_CASE_REGEXP, function (letter, pos) {
-            return (pos ? separator : '') + letter.toLowerCase();
-        });
-    }
-
     var parseSplit = function (key) {
 
         if (key.startsWith('input') || key.startsWith('label'))
             return {
                 prefix: key.substring(0, 5),
-                attribute: snakeCase(key.substring(5), '-')
+                attribute: key.substring(5).snakeCase('-')
             };
 
         return {
@@ -156,7 +148,7 @@ angular.module('dev').directive('mdField', function ($compile, modelDefinitionSe
                 element.append(fieldTemplate);
                 var clone = $compile(fieldTemplate)(scope);
 
-                var ngModel = inputElements.controller('ngModel'); //inputTemplate.controller('ngModel');
+                var ngModel = inputElements.controller('ngModel');
 
                 scope.$model = ngModel;
                 scope.$model.$definition = scope.$definition;

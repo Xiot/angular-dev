@@ -38,6 +38,42 @@ if (typeof String.prototype.endsWith != 'function') {
     };
 }
 
+
+if (typeof String.prototype.snakeCase != 'function') {
+    String.prototype.snakeCase = function (separator) {
+        var SNAKE_CASE_REGEXP = /[A-Z]/g;
+
+        separator = separator || '_';
+        return this.replace(SNAKE_CASE_REGEXP, function (letter, pos) {
+            return (pos ? separator : '') + letter.toLowerCase();
+        });
+    }
+}
+/*
+if (typeof String.prototype.camelCase != 'function') {
+    String.prototype.camelCase = function () {
+        var toCamelCase = function (source) {
+
+            if (source === null || source === undefined || source.length === 0)
+                return "";
+
+            var words = source.split(/[\s-_]/);
+            var cased = "";
+            for (var i = 0; i < words.length; i++) {
+
+                if (cased.length > 0)
+                    cased += " ";
+
+                if (words[i].length > 0)
+                    cased += words[i][0].toUpperCase() + words[i].substr(1).toLowerCase();
+            }
+            return cased;
+        };
+        return toCamelCase(this);
+    }
+}
+*/
+
 function ObjectDiff(left, right) {
 
     var diff = {};

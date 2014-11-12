@@ -1,0 +1,19 @@
+﻿
+Links
+----------------------------
+ui-utils - https://github.com/angular-ui/ui-utils
+
+
+Ideas
+---------------------------
+create directive for async commands
+ - use angular-promise-tracker (maybe overkill) to watch for when the promise is complete
+  - allow for animations when the promise resolves
+  use case:
+	expanding menu item, where getting the sub menus needs to happen async
+	  - show a loading animation while retreiving data
+
+incorporate ui-utils.format or similar for easy string formatting
+
+easy attribute based validation (see ui-utils-validation)
+service based validators (sync and async)
