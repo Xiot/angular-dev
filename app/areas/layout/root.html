@@ -21,17 +21,17 @@
     <md-field field="model.hireDate"></md-field>
     <md-field field="model.gender"></md-field>-->
 
-    <md-field field="model.firstName" template-name="other" input-autocomplete="off"></md-field>   
-    <md-field field="model.employed"></md-field>
-    <pre>Employed: {{model.employed}}</pre>
+    <!--<md-field field="model.firstName" template-name="other" input-autocomplete="off"></md-field>   
+    <md-field field="model.employed"></md-field>-->
+    <md-field field="model.age" input-validator input-validator-val1="testVal(4,7)" input-validator-val2="testVal(7,10)"></md-field>
     <pre>{{form.$valid | json}}</pre>
 
     <!--<validating-field field-model="model.age"></validating-field>-->
+    <span ng-init="g = {}"></span>
+    <input ng-model="g.prop1" name="prop1" />
+    <input ng-model="g.prop2" must-match=".prop1" must-match-watch="true" name="prop2" />
+    <pre>{{form.prop2.$error | json}}</pre>
 
-    <input ng-model="model.firstName" />
-    <new-scope>
-        <input ng-model="model.firstName" />
-    </new-scope>
     <!--<validating-field field-model="model.firstNameMatch"
                       label-translate="FIELD.FIRSTNAME">
 

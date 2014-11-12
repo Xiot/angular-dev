@@ -16,9 +16,21 @@
             
             var map = definition.validations[key];
 
-            var message =map 
-                ? $translate.instant(map.messageKey, { param: map.param })
-                : 'VALIDATION TYPE NOT DEFINED \'' + key + "'.";
+            // may want to try to use the default 'ERRORS.key' if the validation cant be found.
+            // may want to put the parameters used in the error on the model
+            //  something like $model.$errorArgs = {key: [3, 'b']}
+            //  validator and md-field would have to do this
+            // may want to devise a seperate directive to put these values on the $model
+
+            var messageKey = map && map.messageKey || 'ERRORS.' + key;
+            var params = (map && map.param) 
+                || (scope.$field.$errorParams && scope.$field.$errorParams[key]);
+            
+            var message = $translate.instant(messageKey, { param: params });
+            //var message =map 
+            //    ? $translate.instant(map.messageKey, { param: map.param })
+            //    : 'VALIDATION TYPE NOT DEFINED \'' + key + "'.";
+
             scope.$errors[key] = message;
 
             // Validator messages should be sorted by priority, and the highest priority should be set as $$first

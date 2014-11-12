@@ -8,7 +8,8 @@
         "min": "Value must be {{param}} or greater.",
         "pattern": "Value does not match the pattern {{param}}",
         "NAN": "Value must be a number",
-        "INTEGER": "Value must be an integer"
+        "INTEGER": "Value must be an integer",
+        "val1": "Must be between {{param[0]}} and {{param[1]}}."
     },
     "LANGUAGE": {
         "EN": "English",
