@@ -1,5 +1,52 @@
+
+
+var originalModule = angular.module;
+var decoratedModule = function() {
+    var mod = originalModule.apply(this, arguments);
+
+    if (typeof mod.directiveClass != 'function') {
+        mod.directiveClass = function(name, directiveConstructor) {
+
+            var wrapper = ['$injector', function ($injector) {
+
+                var impl = $injector.instantiate(directiveConstructor);
+                
+                return {
+                    compile: (impl.compile && impl.compile.bind(impl)) || null,
+                    link: (impl.link && impl.link.bind(impl)) || null,
+
+                    controller: impl.controller,
+                    controllerAs: impl.controllerAs,
+
+                    priority: impl.priority,
+                    replace: impl.replace,
+                    require: impl.require,
+                    restrict: impl.restrict,
+                    scope: impl.scope,
+
+                    template: impl.template,
+                    templateUrl: impl.templateUrl,
+
+                    terminal: impl.terminal,
+                    transclude: impl.transclude
+                }
+
+            }];
+            mod.directive(name, wrapper);
+            return mod;
+        };        
+    }
+    return mod;
+}
+
+angular.module = decoratedModule;
+
 angular.module('dev', ['ui.router', 'pascalprecht.translate']);
 
+angular.module('dev')
+    .directiveClass('class', function() {
+        this.restrict = 'A';
+    }).directiveClass('other', function() {});
 
 angular.module('dev')
 .config(function (validationServiceProvider, modelDefinitionServiceProvider, templateFactoryProvider) {
