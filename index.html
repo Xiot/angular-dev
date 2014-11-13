@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
 <link href="bower_components/bootstrap/dist/css/bootstrap.css" rel="stylesheet" />
+<link href="bower_components/angular-toastr/dist/angular-toastr.css" rel="stylesheet" />
 <link href="styles/app.manual.css" rel="stylesheet" />
 <head>
 </head>
@@ -10,6 +11,11 @@
 
     </div>
 
+	<!-- 
+		Look at grunt-file-blocks and grunt-usemin to auto add/maintain the list
+		 of script files in the root html
+		https://github.com/rrharvey/grunt-file-blocks 
+	-->
 
     <script src="bower_components/angular/angular.js"></script>
     <script src="bower_components/angular-ui-router/release/angular-ui-router.js"></script>
@@ -17,6 +23,7 @@
     <script src="bower_components/angular-translate/angular-translate.js"></script>
     <script src="bower_components/angular-translate-loader-url/angular-translate-loader-url.js"></script>
     <script src="bower_components/angular-translate-loader-static-files/angular-translate-loader-static-files.js"></script>
+    <script src="bower_components/angular-toastr/dist/angular-toastr.js"></script>
 
     <script src="app/common/lib/utils.js"></script>
 
@@ -27,7 +34,8 @@
     <script src="app/common/services/validationObject.js"></script>
     <script src="app/common/services/validationService.js"></script>
     <script src="app/common/services/modelDefinitionService.js"></script>
-    
+    <script src="app/common/directives/notification/notificationService.js"></script>
+
     <script src="app/common/directives/field/fieldTemplate.js"></script>
 
     <script src="app/common/directives/tree.js"></script>

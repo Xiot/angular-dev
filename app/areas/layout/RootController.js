@@ -1,5 +1,5 @@
 ﻿angular.module('dev').controller('RootController',
-    function ($scope, modelDefinitionService, $translate) {
+    function ($scope, modelDefinitionService, $translate, toastr) {
         $scope.message = "Hello World";
 
 
@@ -23,4 +23,9 @@
         $scope.onSubmit = function (e) {
             alert('submit');
         };
+
+        $scope.toast = function(msg){
+            toastr.error(msg, 'Mmmm Toast!', {closeButton: true, positionClass: 'toast-top-full-width'});
+        }
+
     });
