@@ -3,18 +3,18 @@
 <button ng-click="setLanguage('fr')" translate="LANGUAGE.FR"></button>
 <button ng-click="setLanguage('en')" translate="LANGUAGE.EN" ></button>
 
-<form name="form" md-submit="onSubmit($event)" novalidate>
+<form name="form" md-submit="onSubmit($event)" ng-submit="onSubmit()" novalidate>
 
-    <md-field field="model.age" input-validator input-validator-val1="testVal(4,7)" input-validator-val2="testVal(7,10)"></md-field>
+    <md-field field="model.age" input-validator input-validator-val1="testVal(4,7)" input-validator-val2="testVal(5,10)"></md-field>
     <pre>{{form.$valid | json}}</pre>
 
     <md-field field="model.firstName" input-autocomplete="off"></md-field>
-    <button ng-click="toast(model.firstName)">Info</button>
+    <a ng-click="toast(model.firstName)">Info</a>
+    <a ng-click="modal()">Modal</a>
 
-
-    <button ng-click="model.$commit()">Commit</button>
-    <button ng-click="model.$rollback()">Rollback</button>
-    <button type="submit">Submit</button>
+    <a ng-click="model.$commit()">Commit</a>
+    <a ng-click="model.$rollback()">Rollback</a>
+    <a ng-click="form.submit()">Submit</a>
 
     <div>FirstName: {{model.firstName}}</div>
     <div>FirstNameMatch: {{model.firstNameMatch}}</div>

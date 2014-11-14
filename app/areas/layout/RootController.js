@@ -1,5 +1,5 @@
 ﻿angular.module('dev').controller('RootController',
-    function ($scope, modelDefinitionService, $translate, toastr) {
+    function ($scope, modelDefinitionService, $translate, toastr, dialogService) {
         $scope.message = "Hello World";
 
 
@@ -28,4 +28,7 @@
             toastr.error(msg, 'Mmmm Toast!', {closeButton: true, positionClass: 'toast-top-full-width'});
         }
 
+        $scope.modal = function () {
+            dialogService.show('simple', { data: { title: 'Title', body: 'Body' } });
+        }
     });

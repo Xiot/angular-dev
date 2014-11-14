@@ -41,12 +41,7 @@ var decoratedModule = function() {
 
 angular.module = decoratedModule;
 
-angular.module('dev', ['ui.router', 'pascalprecht.translate', 'toastr']);
-
-angular.module('dev')
-    .directiveClass('class', function() {
-        this.restrict = 'A';
-    }).directiveClass('other', function() {});
+angular.module('dev', ['ngAnimate', 'ui.router', 'pascalprecht.translate', 'toastr', 'ui.bootstrap']);
 
 angular.module('dev')
 .config(function (validationServiceProvider, modelDefinitionServiceProvider, templateFactoryProvider) {
